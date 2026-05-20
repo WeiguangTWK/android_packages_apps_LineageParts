@@ -26,9 +26,11 @@ import android.widget.TextView;
 import org.lineageos.lineageparts.R;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -37,6 +39,7 @@ public class PackageListAdapter extends BaseAdapter implements Runnable {
     private final LayoutInflater mInflater;
     private final List<PackageItem> mInstalledPackages = new LinkedList<>();
     private Set<String> mExcludedPackages = new HashSet<>();
+    private volatile boolean mIncludeSystemApps = false;
 
     // Packages which don't have launcher icons, but which we want to show nevertheless
     private static final String[] PACKAGE_WHITELIST = new String[] {
@@ -152,6 +155,7 @@ public class PackageListAdapter extends BaseAdapter implements Runnable {
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         List<ResolveInfo> installedAppsInfo = mPm.queryIntentActivities(mainIntent,
                 PackageManager.ResolveInfoFlags.of(0));
+        final Map<String, PackageItem> packageItemMap = new HashMap<>();
 
         for (ResolveInfo info : installedAppsInfo) {
             ApplicationInfo appInfo = info.activityInfo.applicationInfo;
@@ -159,14 +163,16 @@ public class PackageListAdapter extends BaseAdapter implements Runnable {
                 continue;
             }
 
-            final PackageItem item = new PackageItem(appInfo.packageName,
-                    appInfo.loadLabel(mPm), appInfo.loadIcon(mPm));
+            final PackageItem item = packageItemMap.computeIfAbsent(appInfo.packageName, packageName ->
+                    new PackageItem(packageName, appInfo.loadLabel(mPm), appInfo.loadIcon(mPm)));
             item.activityTitles.add(info.loadLabel(mPm));
-            mHandler.obtainMessage(0, item).sendToTarget();
         }
 
         for (String packageName : PACKAGE_WHITELIST) {
             if (mExcludedPackages.contains(packageName)) {
+                continue;
+            }
+            if (packageItemMap.containsKey(packageName)) {
                 continue;
             }
             try {
@@ -174,16 +180,48 @@ public class PackageListAdapter extends BaseAdapter implements Runnable {
                         PackageManager.ApplicationInfoFlags.of(0));
                 final PackageItem item = new PackageItem(appInfo.packageName,
                         appInfo.loadLabel(mPm), appInfo.loadIcon(mPm));
-                mHandler.obtainMessage(0, item).sendToTarget();
+                packageItemMap.put(packageName, item);
             } catch (PackageManager.NameNotFoundException ignored) {
                 // package not present, so nothing to add -> ignore it
             }
+        }
+
+        if (mIncludeSystemApps) {
+            final List<ApplicationInfo> installedApps = mPm.getInstalledApplications(
+                    PackageManager.ApplicationInfoFlags.of(0));
+            for (ApplicationInfo appInfo : installedApps) {
+                if (mExcludedPackages.contains(appInfo.packageName)
+                        || packageItemMap.containsKey(appInfo.packageName)
+                        || !isSystemApp(appInfo)) {
+                    continue;
+                }
+                final PackageItem item = new PackageItem(appInfo.packageName,
+                        appInfo.loadLabel(mPm), appInfo.loadIcon(mPm));
+                packageItemMap.put(appInfo.packageName, item);
+            }
+        }
+
+        for (PackageItem item : packageItemMap.values()) {
+            mHandler.obtainMessage(0, item).sendToTarget();
         }
     }
 
     public void setExcludedPackages(HashSet<String> packages) {
         mExcludedPackages = packages;
         reloadList();
+    }
+
+    public void setIncludeSystemApps(boolean includeSystemApps) {
+        if (mIncludeSystemApps == includeSystemApps) {
+            return;
+        }
+        mIncludeSystemApps = includeSystemApps;
+        reloadList();
+    }
+
+    private static boolean isSystemApp(ApplicationInfo appInfo) {
+        return (appInfo.flags & (ApplicationInfo.FLAG_SYSTEM
+                | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0;
     }
 
     private static class ViewHolder {

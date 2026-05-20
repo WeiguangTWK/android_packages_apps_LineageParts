@@ -528,4 +528,10 @@
     <string name="sms_security_check_limit_summary">在使用者認可之前，應用程式在 1 分鐘內只能傳送 %s 則訊息</string>
     <string name="sms_security_check_limit_summary_none">未經確認的應用程式不允許傳送任何訊息</string>
     <string name="sms_security_check_limit_always_confirm">一律確認</string>
+    <string name="tee_soft_debug_title">TEE 軟模擬</string>
+    <string name="tee_soft_debug_summary">依應用程式控制證明模擬與 keybox 覆寫</string>
+    <string name="tee_soft_debug_enable_title">啟用 TEE 軟模擬</string>
+    <string name="tee_soft_debug_show_system_apps_title">顯示系統應用程式</string>
+    <string name="tee_soft_debug_show_system_apps_summary">在應用程式選擇器中包含預載系統軟體</string>
+    <string name="tee_soft_debug_remove_app_message">要將 %1$s 從 TEE 軟模擬目標中移除嗎？</string>
 </resources>

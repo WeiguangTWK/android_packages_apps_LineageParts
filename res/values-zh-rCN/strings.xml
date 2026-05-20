@@ -540,4 +540,10 @@
     <string name="sms_security_check_limit_summary">应用在 1 分钟内发送不超过 %s 条短信无需确认</string>
     <string name="sms_security_check_limit_summary_none">应用在发送任何短信前必须获得您的确认</string>
     <string name="sms_security_check_limit_always_confirm">始终确认</string>
+    <string name="tee_soft_debug_title">TEE 软模拟</string>
+    <string name="tee_soft_debug_summary">对指定App开启KeyAttestation模拟</string>
+    <string name="tee_soft_debug_enable_title">启用 TEE 软模拟</string>
+    <string name="tee_soft_debug_show_system_apps_title">显示系统应用</string>
+    <string name="tee_soft_debug_show_system_apps_summary">在应用选择器中包含预装系统软件</string>
+    <string name="tee_soft_debug_remove_app_message">将 %1$s 从 TEE 软模拟目标中移除？</string>
 </resources>

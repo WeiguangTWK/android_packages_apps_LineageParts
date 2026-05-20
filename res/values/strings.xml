@@ -689,4 +689,28 @@
     <string name="sms_security_check_limit_summary">Apps can send %s messages in 1 minute before requiring confirmation</string>
     <string name="sms_security_check_limit_summary_none">Apps are not allowed to send any messages without confirmation</string>
     <string name="sms_security_check_limit_always_confirm">Always confirm</string>
+
+    <!-- TEE soft emulate -->
+    <string name="tee_soft_debug_title">TEE Soft Emulate</string>
+    <string name="tee_soft_debug_summary">Per-app attestation emulation controls and keybox override</string>
+    <string name="tee_soft_debug_enable_title">Enable TEE Soft Emulate</string>
+    <string name="tee_soft_debug_mode_title">Operation mode</string>
+    <string name="tee_soft_debug_mode_patch">Patch</string>
+    <string name="tee_soft_debug_mode_auto">Auto</string>
+    <string name="tee_soft_debug_mode_generate">Generate</string>
+    <string name="tee_soft_debug_keybox_path_title">Custom keybox XML path</string>
+    <string name="tee_soft_debug_keybox_path_summary">No keybox imported. Tap to choose keybox.xml for attestation debugging</string>
+    <string name="tee_soft_debug_keybox_pick_success">Keybox copied: %1$s</string>
+    <string name="tee_soft_debug_keybox_pick_failed">Unable to import selected keybox XML</string>
+    <string name="tee_soft_debug_applications_title">Target applications</string>
+    <string name="tee_soft_debug_show_system_apps_title">Show system apps</string>
+    <string name="tee_soft_debug_show_system_apps_summary">Include preinstalled system software in the app picker</string>
+    <string name="tee_soft_debug_applications_empty">No target apps selected. Tap Add to include one.</string>
+    <string name="tee_soft_debug_remove_app_message">Remove %1$s from TEE Soft Emulate targets?</string>
+    <string name="tee_soft_debug_enabled_no_apps">Enabled (no apps selected)</string>
+    <string name="tee_soft_debug_enabled_no_keybox">Enabled (no keybox imported)</string>
+    <plurals name="tee_soft_debug_enabled_with_apps">
+        <item quantity="one">Enabled for %d app</item>
+        <item quantity="other">Enabled for %d apps</item>
+    </plurals>
 </resources>

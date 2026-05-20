@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="tee_soft_debug"
+    android:title="@string/tee_soft_debug_title">
+
+    <androidx.preference.SwitchPreferenceCompat
+        android:key="tee_soft_debug_enabled"
+        android:title="@string/tee_soft_debug_enable_title" />
+
+    <ListPreference
+        android:key="tee_soft_debug_mode"
+        android:title="@string/tee_soft_debug_mode_title"
+        android:entries="@array/tee_soft_debug_mode_entries"
+        android:entryValues="@array/tee_soft_debug_mode_values"
+        android:defaultValue="patch"
+        android:dependency="tee_soft_debug_enabled" />
+
+    <Preference
+        android:key="tee_soft_debug_keybox_path"
+        android:title="@string/tee_soft_debug_keybox_path_title"
+        android:summary="@string/tee_soft_debug_keybox_path_summary"
+        android:dependency="tee_soft_debug_enabled" />
+
+    <PreferenceCategory
+        android:key="tee_soft_debug_applications"
+        android:title="@string/tee_soft_debug_applications_title"
+        android:dependency="tee_soft_debug_enabled">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="tee_soft_debug_show_system_apps"
+            android:title="@string/tee_soft_debug_show_system_apps_title"
+            android:summary="@string/tee_soft_debug_show_system_apps_summary" />
+
+        <Preference
+            android:key="tee_soft_debug_add_app"
+            android:title="@string/add"
+            android:icon="@drawable/ic_add_24dp" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

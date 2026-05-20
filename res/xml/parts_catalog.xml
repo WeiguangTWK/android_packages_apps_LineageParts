@@ -33,6 +33,12 @@
           android:fragment="org.lineageos.lineageparts.input.ButtonSettings"
           lineage:xmlRes="@xml/button_settings" />
 
+    <part android:key="tee_soft_debug"
+          android:title="@string/tee_soft_debug_title"
+          android:summary="@string/tee_soft_debug_summary"
+          android:fragment="org.lineageos.lineageparts.teedebug.TeeSoftDebugSettings"
+          lineage:xmlRes="@xml/tee_soft_debug_settings" />
+
     <part android:key="contributors"
           android:title="@string/contributors_cloud_fragment_title"
           android:fragment="org.lineageos.lineageparts.contributors.ContributorsCloudFragment"
